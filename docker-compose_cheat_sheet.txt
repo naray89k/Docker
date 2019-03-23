@@ -1,0 +1,9 @@
+docker-compose up                 ----> To run all the containers in docker-compose.yml in a single go: (But interactively)
+docker-compose up --build         ----> To run rebuild and run all the containers in docker-compose.yml in a single go: (But interactively)
+docker-compose up -d              ----> To run all the containers in docker-compose.yml in a single go and detach them 
+docker-compose down               ----> To stop all the containers mentioned in docker-compose.yml file
+docker-compose ps                 ----> Works same as "docker ps"
+
+
+
+
