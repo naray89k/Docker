@@ -1,0 +1,6 @@
+1. Pick the right base image.
+
+2. Go to the shell,
+3. Add the Env/Host configuration steps required for your requirement
+
+4. Repeat the steps 2 and 3 all untill the complete docker env in comply with the requirements  

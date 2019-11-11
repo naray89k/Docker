@@ -43,4 +43,76 @@ docker exec -it <Container ID> <Command>
 
 docker build -t <docker user id>/<Project name>:<version> <Dockerfile directory>  
 
++docker build -t <docker user id>/<Project name>:<version> <Dockerfile directory>
 
++=======================================
+docker images --filter "dangling=true"                   -----> Lists the dangling images
+docker images -q --filter "dangling=true"                -----> Lists the dangling images id only
+docker rmi $(docker images -q --filter "dangling=true")  -----> command to remove dangling images which is occupying space.
+
+docker --version
+docker version
+docker info
+docker --help
+docker container run --publish 80:80 nginx
+docker container run --publish 80:80 --detach nginx
+docker ps
+docker ps -a
+docker container ls
+docker container ls -a
+docker container rm
+docker container rm 9703af12dc09 e646421bcc54 9ac702ac6859
+docker container stop 9ac702ac6859
+docker container rm 9ac702ac6859
+docker container ls -l
+docker run --name mongo -d mongo
+docker container ls -l
+docker top mongo
+docker container ls -l
+docker container start mongo
+docker container ls -l
+docker container stop mongo
+docker container ls -l
+docker container run -it python:3.7.5-alpine3.10
+docker container run -it python:3.7.5-alpine3.10 /bin/bash
+docker container run -it python:3.7.5 /bin/bash
+docker images
+docker container ls -a
+docker container rm cac0f9772dc5 4efa9c9d3f11 13af6f335076
+docker container ls -a
+docker container rm c4e632224bb20
+docker container rm 965553e202a4
+docker container rm mongo
+docker container run -it --rm python:3.7.5-alpine
+docker images
+docker container run -it --rm python:3.7.5
+docker container run -it --rm python:3.7.5 /bin/bash
+docker container run -it --rm python:3.7.5-alpine
+docker container run -it --rm python:3.7.5-alpine /bin/sh
+docker build -t naray89k/python_3.7.5_alpine_numpy:1.0 .
+docker container run -it --rm naray89k/python_3.7.5_alpine_numpy:1.0 /bin/sh
+docker container run -it --rm php:7.1.2-apache 
+docker container run -it --rm php:7.1.2-apache /bin/bash
+docker build -t naray89k/php_apache_slim:1.0 .
+docker build -t naray89k/php_apache_slim:1.0 .
+docker container run -it --rm naray89k/php_apache_slim:1.0 /bin/bash
+docker container run -v $(pwd):/var/www/html/ -p 80:80 -it --rm naray89k/php_apache_slim:1.0
+docker images
+docker image rm mongo
+docker container ls
+docker image rm --force node
+docker images
+docker image rm --force node
+docker image rm --force e834398209c1
+docker container run -it alpine:3.4
+docker container run -it alpine:3.4 /bin/bash
+docker container run -it alpine:3.4 /bin/sh
+docker build -t naray89k/alpine-smarter:1.0 .
+docker build -t naray89k/alpine-smarter:1.0 .
+docker container run --it --rm naray89k/alpine-smarter:1.0
+docker container run -it --rm naray89k/alpine-smarter:1.0
+docker container run -it --rm naray89k/alpine-smarter:1.0 /bin/sh
+docker images
+docker images -a
+docker build -t naray89k/alpine-smarter:1.0 .
+docker container run -it --rm naray89k/alpine-smarter:1.0 /bin/sh
