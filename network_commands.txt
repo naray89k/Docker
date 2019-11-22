@@ -1,0 +1,12 @@
+docker network ls
+docker network inspect bridge
+docker network ls
+docker network create my_app_net
+docker network ls
+docker network create --help
+docker network inspect my_app_net
+docker network --help
+docker network connect
+docker network inspect TAB COMPLETION
+docker network ls
+docker network create dude
