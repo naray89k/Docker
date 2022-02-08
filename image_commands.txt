@@ -4,6 +4,10 @@
 
 http://hub.docker.com
 
+docker pull <REGISTRY>/<REPO>/<IMAGE(TAG)>
+
+=====================================================
+
 docker image ls
 
 docker pull nginx

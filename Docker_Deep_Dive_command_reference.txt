@@ -1,0 +1,203 @@
+
+The high-level process will be as follows: 
+Configure a CA and certificates 
+Create a CA 
+Create and sign keys for the Daemon
+Create and sign keys for the Client
+Distribute keys
+Configure Docker to use TLS
+Configure daemon mode
+Configure client mode
+
+1. Create a new private key for the CA.
+  You’ll set a passphrase as part of the operation. Don’t forget it!
+
+  Command:
+  --------
+  openssl genrsa -aes256 -out ca-key.pem 4096
+
+
+2. Use the CA’s private key to generate a public key (certificate).
+   Command:
+   --------
+   openssl req -new -x509 -days 730 -key ca-key.pem -sha256 -out ca.pem
+
+
+==========================================================================
+
+openssl genrsa -out daemon-key.pem 4096
+
+openssl req -subj "/CN=node3" -sha256 -new -key daemon-key.pem -out daemon.csr
+
+
+echo extendedKeyUsage=clientAuth > extfile.cnf
+
+openssl x509 -req -days 730 -sha256 -in client.csr -CA ca.pem -CAkey ca-key.pem -CAcreateserial -out client-cert.pem -extfile extfile.cnf
+
+=================================================================================
+
+
+# The following command will return dangling images ....
+
+DOCKER IMAGE COMMANDS:
+======================
+docker image ls --filter dangling=true
+
+	dangling: Accepts true or false, and returns only dangling images (true), or non-dangling images (false). 
+	before:   Requires an image name or ID as argument, and returns all images created before it. 
+	since:    Same as above, but returns images created after the specified image.
+	label:    Filters images based on the presence of a label or label and value. The docker image ls command does not display labels in its output.
+
+
+docker image ls --filter reference="*:latest"
+
+
+docker image ls --format "{{.Size}}"
+
+
+docker image ls --format "{{.Repository}}: {{.Tag}}: {{.Size}}"
+
+
+SEARCHING DOCKER HUB FROM THE CLI:
+==================================
+
+1.	-----------------------------------------------------------------------------------------------------------------------------------------------------
+	In its simplest form, it searches for all repos containing a certain string in the “NAME” field. For example, the following command searches for all repos with “nigelpoulton” in the “NAME” field.
+
+	COMMAND:
+	docker search nigelpoulton
+	-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+  -----------------------------------------------------------------------------------------------------------------------------------------------------
+2. The “NAME” field is the repository name. This includes the Docker ID, or organization name, for unofficial repositories. For example, the following c
+   command will list all repositories that include the string “alpine” in the name.
+
+	COMMAND:
+	docker search alpine
+	-----------------------------------------------------------------------------------------------------------------------------------------------------
+	
+	-----------------------------------------------------------------------------------------------------------------------------------------------------
+3.	Notice how some of the repositories returned are official and some are unofficial. You can use --filter "is-official=true" so that only official repos
+    are displayed.
+
+	COMMAND:
+	docker search alpine --filter "is-official=true"
+	-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+  -----------------------------------------------------------------------------------------------------------------------------------------------------
+4.  We can do the same again, but this time only show repos with automated builds.
+
+	COMMAND:
+	dsocker search alpine --filter "is-automated=true"
+	-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+  -----------------------------------------------------------------------------------------------------------------------------------------------------
+5. One last thing about docker search. By default, Docker will only display 25 lines of results. However, you can use the --limit flag to increase that to 
+   a maximum of 100.
+
+  COMMAND:
+  docker search alpine --filter "is-automated=true" --limit=100 s
+  -----------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+=====================================================================================================================================
+docker port web
+
+docker network create -d bridge golden-gate
+docker network ls
+
+docker container stop web
+docker container rm web
+docker container run --rm -d --name web --network golden-gate -p 8080:80 nginx
+
+docker port web
+
+docker swarm init
+docker swarm join --token SWMTKN-1-5lpw0m25jbzjm4sgii7cywx69y9oagwt01f0e2errjuvcapygb-8r5mf834im028zmkfww7dknjp 192.168.64.3:2377
+docker node ls
+docker container run --rm -d --name web --network golden-gate -p 8080:80 nginx
+
+docker network create -d overlay overnet
+
+docker service create -d -name pinger --replicas 2 --network overnet alpine sleep 1d
+
+docker service create -d --name pinger --replicas 2 --network overnet alpine sleep 1d
+
+docker service ls
+
+docker service ps pinger
+
+docker network inspect overnet
+
+docker container exec -it 4253731ec717 sh
+
+docker service ls
+
+docker service rm pinger
+
+docker service create -d --name pinger --replicas 2 --network overnet alpine sleep 1d
+
+docker service rm pinger
+
+docker service create -d --name ping --replicas 2 --network overnet alpine sleep 1d
+docker service create -d --name pong --replicas 3 --network overnet alpine sleep 1d
+
+docker service ls
+
+docker container ps -a
+
+docker container exec -it a6b431de3529 sh
+
+docker service rm ping pong
+
+docker service create -d --name web --network overnet --replicas 1 -p 8080:80 nginx
+
+docker service inspect web --pretty
+
+docker container ps -a
+
+docker service rm web
+
+docker volume ls
+docker ps -a
+docker container rm nginx redis
+docker volume ls
+docker volume inspect 674e6dcadeaf5929d2c992f9c3bc027afc02b72efb336006ca240854cc84227b
+docker volume rm 674e6dcadeaf5929d2c992f9c3bc027afc02b72efb336006ca240854cc84227b
+docker volume rm b1b24c694d96ca91bdce9a5323eff465d2f6ae1b4cf9f7086b36f4faad626b35
+docker volume create myvol
+docker volume create psvol
+docker volume ls
+docker inspect myvol
+docker inspect psvol
+docker volume ls
+docker volume rm myvol psvol
+docker volume ls
+docker container run -dit --name voltest --mount source=ubervol,target=/vol alpine:latest
+docker container ps
+docker exec -it voltest sh
+docker exec -it voltest sh
+docker container stop voltest
+docker container rm voltest
+docker volume ls
+docker container run -dit --name volmore --mount source=ubervol,target=/app nginx:latest
+docker container ps -a
+docker exec -it volmore sh
+docker secrets --help
+docker secret --help
+docker secret create wp-sec-v1 .classified
+docker secret ls
+docker secret inspect wp-sec-v1 --pretty
+docker secret inspect wp-sec-v1
+docker swarm ls
+docker node
+docker node ls
+docker service create -d --name secret-service --secret wp-sec-v1 alpine sleep 1d
+docker container ps -a
+docker service ls
+docker service inspect secret-service
+docker container ps -a
+docker exec -it f0bc1a6f5da3 sh
+docker service rm secret-service
+docker secret rm wp-sec-v1
